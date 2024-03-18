@@ -17,6 +17,9 @@ export class RegisterInput {
 	@Field(() => String)
 	phone: string
 
+	@Field(() => String)
+	avatarPath: string
+
 	@Field(() => String, { nullable: true })
 	companyName?: string
 

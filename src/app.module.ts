@@ -5,6 +5,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { join } from 'path'
 import { ConfigModule } from '@nestjs/config'
 import { BasketModule } from './basket/basket.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
 	imports: [
@@ -17,7 +18,8 @@ import { BasketModule } from './basket/basket.module';
 			envFilePath: '.env'
 		}),
 		UserModule,
-		BasketModule
+		BasketModule,
+		AuthModule
 	],
 	controllers: [],
 	providers: []

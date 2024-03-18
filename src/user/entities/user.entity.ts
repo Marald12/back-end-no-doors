@@ -45,6 +45,9 @@ export class User {
 	@Field()
 	favoritesProducts: any
 
+	@Field(() => String)
+	avatarPath: string
+
 	@Field(() => Basket)
 	basket: Basket
 }
