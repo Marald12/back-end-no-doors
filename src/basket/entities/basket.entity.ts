@@ -1,7 +1,20 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql'
+import { User } from '../../user/entities/user.entity'
 
 @ObjectType()
 export class Basket {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+	@Field(() => Int)
+	id: number
+
+	@Field(() => Date)
+	createdAt: Date
+
+	@Field(() => Date)
+	updatedAt: Date
+
+	@Field(() => User)
+	user: User
+
+	@Field()
+	items: any
 }

@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql'
+import { Basket } from '../../basket/entities/basket.entity'
 
 @ObjectType()
 export class User {
@@ -35,9 +36,15 @@ export class User {
 	@Field(() => String, { nullable: true })
 	legalAddress?: string
 
+	@Field(() => Date)
+	createdAt: Date
+
+	@Field(() => Date)
+	updatedAt: Date
+
 	@Field()
 	favoritesProducts: any
 
-	@Field()
-	basket: any
+	@Field(() => Basket)
+	basket: Basket
 }
