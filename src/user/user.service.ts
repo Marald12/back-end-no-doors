@@ -71,6 +71,12 @@ export class UserService {
 	}
 
 	async remove(id: number) {
-		return `This action removes a #${id} user`
+		const prismaClient = new PrismaClient()
+
+		await prismaClient.user.delete({
+			where: { id }
+		})
+
+		return 'Пользователь успешно удалён'
 	}
 }

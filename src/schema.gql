@@ -46,7 +46,7 @@ type Query {
 
 type Mutation {
   updateUser(updateUserInput: UpdateUserInput!): UserEntity!
-  removeUser(id: Int!): UserEntity!
+  removeUser: String!
   createBasket(createBasketInput: CreateBasketInput!): BasketEntity!
   updateBasket(updateBasketInput: UpdateBasketInput!): BasketEntity!
   removeBasket(id: Int!): BasketEntity!

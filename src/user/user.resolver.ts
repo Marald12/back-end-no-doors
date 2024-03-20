@@ -4,6 +4,8 @@ import { UserEntity } from './entities/user.entity'
 import { UpdateUserInput } from './dto/update-user.input'
 import { CurrentUser } from './decorators/user.decorator'
 import { User } from '@prisma/client'
+import { GqlAuthGuard } from '../auth/decorators/auth.decorator'
+import { UseGuards } from '@nestjs/common'
 
 @Resolver(() => UserEntity)
 export class UserResolver {
@@ -20,6 +22,7 @@ export class UserResolver {
 	}
 
 	@Mutation(() => UserEntity)
+	@UseGuards(GqlAuthGuard)
 	updateUser(
 		@Args('updateUserInput') updateUserInput: UpdateUserInput,
 		@CurrentUser() user: User
@@ -27,8 +30,9 @@ export class UserResolver {
 		return this.userService.update(user.id, updateUserInput)
 	}
 
-	@Mutation(() => UserEntity)
-	removeUser(@Args('id', { type: () => Int }) id: number) {
-		return this.userService.remove(id)
+	@Mutation(() => String)
+	@UseGuards(GqlAuthGuard)
+	removeUser(@CurrentUser() user: User) {
+		return this.userService.remove(user.id)
 	}
 }
