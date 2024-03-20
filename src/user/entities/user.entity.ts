@@ -1,8 +1,8 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql'
-import { Basket } from '../../basket/entities/basket.entity'
+import { BasketEntity } from '../../basket/entities/basket.entity'
 
 @ObjectType()
-export class User {
+export class UserEntity {
 	@Field(() => Int)
 	id: number
 
@@ -42,12 +42,9 @@ export class User {
 	@Field(() => Date)
 	updatedAt: Date
 
-	@Field()
-	favoritesProducts: any
+	@Field(() => String, { nullable: true })
+	avatarPath?: string
 
-	@Field(() => String)
-	avatarPath: string
-
-	@Field(() => Basket)
-	basket: Basket
+	@Field(() => BasketEntity)
+	basket: BasketEntity
 }

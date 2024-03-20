@@ -1,38 +1,38 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { BasketService } from './basket.service'
-import { Basket } from './entities/basket.entity'
+import { BasketEntity } from './entities/basket.entity'
 import { CreateBasketInput } from './dto/create-basket.input'
 import { UpdateBasketInput } from './dto/update-basket.input'
 
-@Resolver(() => Basket)
+@Resolver(() => BasketEntity)
 export class BasketResolver {
 	constructor(private readonly basketService: BasketService) {}
 
-	@Mutation(() => Basket)
+	@Mutation(() => BasketEntity)
 	createBasket(
 		@Args('createBasketInput') createBasketInput: CreateBasketInput
 	) {
 		return this.basketService.create(createBasketInput)
 	}
 
-	@Query(() => [Basket], { name: 'baskets' })
+	@Query(() => [BasketEntity], { name: 'baskets' })
 	findAll() {
 		return this.basketService.findAll()
 	}
 
-	@Query(() => Basket, { name: 'basket' })
+	@Query(() => BasketEntity, { name: 'basket' })
 	findOne(@Args('id', { type: () => Int }) id: number) {
 		return this.basketService.findOne(id)
 	}
 
-	@Mutation(() => Basket)
+	@Mutation(() => BasketEntity)
 	updateBasket(
 		@Args('updateBasketInput') updateBasketInput: UpdateBasketInput
 	) {
 		return this.basketService.update(updateBasketInput.id, updateBasketInput)
 	}
 
-	@Mutation(() => Basket)
+	@Mutation(() => BasketEntity)
 	removeBasket(@Args('id', { type: () => Int }) id: number) {
 		return this.basketService.remove(id)
 	}

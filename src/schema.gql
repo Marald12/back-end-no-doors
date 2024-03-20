@@ -2,7 +2,19 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
+type BasketEntity {
+  id: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  user: UserEntity!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type UserEntity {
   id: Int!
   email: String!
   password: String!
@@ -14,42 +26,74 @@ type User {
   kpp: Int
   ogrp: Int
   legalAddress: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  avatarPath: String
+  basket: BasketEntity!
+}
+
+type Auth {
+  user: UserEntity!
+  token: String!
 }
 
 type Query {
-  user(id: Int!): User!
+  users: [UserEntity!]!
+  user(id: Int!): UserEntity!
+  baskets: [BasketEntity!]!
+  basket(id: Int!): BasketEntity!
 }
 
 type Mutation {
-  createUser(createUserInput: CreateUserInput!): User!
-  updateUser(updateUserInput: UpdateUserInput!): User!
-  removeUser(id: Int!): User!
-}
-
-input CreateUserInput {
-  id: Int!
-  email: String!
-  password: String!
-  isEntityFace: Boolean!
-  fullName: String!
-  phone: String!
-  companyName: String
-  iin: Int
-  kpp: Int
-  ogrp: Int
-  legalAddress: String
+  updateUser(updateUserInput: UpdateUserInput!): UserEntity!
+  removeUser(id: Int!): UserEntity!
+  createBasket(createBasketInput: CreateBasketInput!): BasketEntity!
+  updateBasket(updateBasketInput: UpdateBasketInput!): BasketEntity!
+  removeBasket(id: Int!): BasketEntity!
+  register(registerInput: RegisterInput!): Auth!
+  login(loginInput: LoginInput!): Auth!
 }
 
 input UpdateUserInput {
-  id: Int!
   email: String
   password: String
   isEntityFace: Boolean
   fullName: String
   phone: String
+  avatarPath: String
   companyName: String
   iin: Int
   kpp: Int
   ogrp: Int
   legalAddress: String
+}
+
+input CreateBasketInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateBasketInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input RegisterInput {
+  email: String!
+  password: String!
+  isEntityFace: Boolean!
+  fullName: String!
+  phone: String!
+  avatarPath: String
+  companyName: String
+  iin: Int
+  kpp: Int
+  ogrp: Int
+  legalAddress: String
+}
+
+input LoginInput {
+  email: String!
+  password: String!
 }

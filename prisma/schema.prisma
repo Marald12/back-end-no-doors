@@ -20,11 +20,11 @@ model User {
   isEntityFace      Boolean
   fullName          String
   phone             String
-  avatarPath        String
+  avatarPath        String?            @default("/uploads/avatar/default-avatar.png")
   companyName       String?            @default("")
-  iin               Int?               @default(0)
-  kpp               Int?               @default(0)
-  ogrp              Int?               @default(0)
+  iin               BigInt?            @default(0)
+  kpp               BigInt?            @default(0)
+  ogrp              BigInt?            @default(0)
   legalAddress      String?            @default("")
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt

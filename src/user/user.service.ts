@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
-import { RegisterInput } from './dto/register.input'
+import { RegisterInput } from '../auth/dto/register.input'
 import { UpdateUserInput } from './dto/update-user.input'
 import { PrismaClient } from '@prisma/client'
 import { genSalt, hash } from 'bcryptjs'
@@ -43,13 +43,31 @@ export class UserService {
 		const prismaClient = new PrismaClient()
 
 		const user = await prismaClient.user.findUnique({ where: { id } })
-		if (!user) throw new BadRequestException('E-mail или пароль неверный')
+		if (!user) throw new BadRequestException('Пользователь не найден')
+
+		return user
+	}
+
+	async findOneByEmail(email: string) {
+		const prismaClient = new PrismaClient()
+
+		const user = await prismaClient.user.findUnique({ where: { email } })
+		if (!user) throw new BadRequestException('Пользователь не найден')
 
 		return user
 	}
 
 	async update(id: number, updateUserInput: UpdateUserInput) {
-		return `This action updates a #${id} user`
+		const prismaClient = new PrismaClient()
+
+		return prismaClient.user.update({
+			where: {
+				id
+			},
+			data: {
+				...updateUserInput
+			}
+		})
 	}
 
 	async remove(id: number) {
