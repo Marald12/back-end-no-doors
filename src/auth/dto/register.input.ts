@@ -2,23 +2,23 @@ import { Field, InputType, Int } from '@nestjs/graphql'
 
 @InputType()
 export class RegisterInput {
-	@Field(() => String)
+	@Field(() => String!)
 	email: string
 
-	@Field(() => String)
+	@Field(() => String!)
 	password: string
 
-	@Field(() => Boolean)
+	@Field(() => Boolean!)
 	isEntityFace: boolean
 
-	@Field(() => String)
+	@Field(() => String!)
 	fullName: string
 
-	@Field(() => String)
+	@Field(() => String!)
 	phone: string
 
-	@Field(() => String)
-	avatarPath: string
+	@Field(() => String, { nullable: true })
+	avatarPath?: string
 
 	@Field(() => String, { nullable: true })
 	companyName?: string
