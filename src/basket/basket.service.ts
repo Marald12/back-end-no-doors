@@ -1,26 +1,66 @@
-import { Injectable } from '@nestjs/common';
-import { CreateBasketInput } from './dto/create-basket.input';
-import { UpdateBasketInput } from './dto/update-basket.input';
+import { Injectable, NotFoundException } from '@nestjs/common'
+import { PrismaClient } from '@prisma/client'
 
 @Injectable()
 export class BasketService {
-  create(createBasketInput: CreateBasketInput) {
-    return 'This action adds a new basket';
-  }
+	async create(id: number) {
+		const prismaClient = new PrismaClient()
 
-  findAll() {
-    return `This action returns all basket`;
-  }
+		return prismaClient.basket.create({
+			data: {
+				user: {
+					connect: {
+						id
+					}
+				}
+			},
+			include: {
+				user: true,
+				items: true
+			}
+		})
+	}
 
-  findOne(id: number) {
-    return `This action returns a #${id} basket`;
-  }
+	async findAll() {
+		const prismaClient = new PrismaClient()
 
-  update(id: number, updateBasketInput: UpdateBasketInput) {
-    return `This action updates a #${id} basket`;
-  }
+		return prismaClient.basket.findMany({
+			include: {
+				user: true,
+				items: true
+			}
+		})
+	}
 
-  remove(id: number) {
-    return `This action removes a #${id} basket`;
-  }
+	async findOne(id: number) {
+		const prismaClient = new PrismaClient()
+
+		const basket = await prismaClient.basket.findUnique({
+			where: { id },
+			include: {
+				user: true,
+				items: true
+			}
+		})
+		if (!basket) throw new NotFoundException('Корзина не найдена')
+
+		return basket
+	}
+
+	async remove(id: number) {
+		const prismaClient = new PrismaClient()
+
+		const user = await prismaClient.user.findUnique({
+			where: { id },
+			include: { basket: true }
+		})
+
+		await prismaClient.basket.delete({
+			where: {
+				id: user.basket.id
+			}
+		})
+
+		return 'Корзина успешно удалена'
+	}
 }

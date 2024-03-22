@@ -37,21 +37,28 @@ type Auth {
   token: String!
 }
 
+type Product {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
 type Query {
   users: [UserEntity!]!
   user(id: Int!): UserEntity!
   baskets: [BasketEntity!]!
   basket(id: Int!): BasketEntity!
+  product(id: Int!): Product!
 }
 
 type Mutation {
   updateUser(updateUserInput: UpdateUserInput!): UserEntity!
   removeUser: String!
-  createBasket(createBasketInput: CreateBasketInput!): BasketEntity!
-  updateBasket(updateBasketInput: UpdateBasketInput!): BasketEntity!
-  removeBasket(id: Int!): BasketEntity!
+  createBasket: BasketEntity!
   register(registerInput: RegisterInput!): Auth!
   login(loginInput: LoginInput!): Auth!
+  createProduct(createProductInput: CreateProductInput!): Product!
+  updateProduct(updateProductInput: UpdateProductInput!): Product!
+  removeProduct(id: Int!): Product!
 }
 
 input UpdateUserInput {
@@ -66,17 +73,6 @@ input UpdateUserInput {
   kpp: Int
   ogrp: Int
   legalAddress: String
-}
-
-input CreateBasketInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
-input UpdateBasketInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
 }
 
 input RegisterInput {
@@ -96,4 +92,15 @@ input RegisterInput {
 input LoginInput {
   email: String!
   password: String!
+}
+
+input CreateProductInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateProductInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
 }

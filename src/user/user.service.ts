@@ -3,9 +3,12 @@ import { RegisterInput } from '../auth/dto/register.input'
 import { UpdateUserInput } from './dto/update-user.input'
 import { PrismaClient } from '@prisma/client'
 import { genSalt, hash } from 'bcryptjs'
+import { BasketService } from '../basket/basket.service'
 
 @Injectable()
 export class UserService {
+	constructor(private readonly basketService: BasketService) {}
+
 	async create(registerInput: RegisterInput) {
 		const prismaClient = new PrismaClient()
 
@@ -20,12 +23,16 @@ export class UserService {
 		const salt = await genSalt(10)
 		const hashPassword = await hash(registerInput.password, salt)
 
-		return prismaClient.user.create({
+		const user = await prismaClient.user.create({
 			data: {
 				...registerInput,
 				password: hashPassword
 			}
 		})
+
+		await this.basketService.create(user.id)
+
+		return user
 	}
 
 	async findAll() {
@@ -42,7 +49,13 @@ export class UserService {
 	async findOne(id: number) {
 		const prismaClient = new PrismaClient()
 
-		const user = await prismaClient.user.findUnique({ where: { id } })
+		const user = await prismaClient.user.findUnique({
+			where: { id },
+			include: {
+				basket: true,
+				favoritesProducts: true
+			}
+		})
 		if (!user) throw new BadRequestException('Пользователь не найден')
 
 		return user
@@ -51,7 +64,12 @@ export class UserService {
 	async findOneByEmail(email: string) {
 		const prismaClient = new PrismaClient()
 
-		const user = await prismaClient.user.findUnique({ where: { email } })
+		const user = await prismaClient.user.findUnique({
+			where: { email },
+			include: {
+				basket: true
+			}
+		})
 		if (!user) throw new BadRequestException('Пользователь не найден')
 
 		return user
@@ -72,6 +90,10 @@ export class UserService {
 
 	async remove(id: number) {
 		const prismaClient = new PrismaClient()
+
+		const user = await this.findOne(id)
+
+		if (user.basket) await this.basketService.remove(id)
 
 		await prismaClient.user.delete({
 			where: { id }

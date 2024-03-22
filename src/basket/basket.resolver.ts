@@ -1,18 +1,19 @@
 import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { BasketService } from './basket.service'
 import { BasketEntity } from './entities/basket.entity'
-import { CreateBasketInput } from './dto/create-basket.input'
-import { UpdateBasketInput } from './dto/update-basket.input'
+import { CurrentUser } from '../user/decorators/user.decorator'
+import { User } from '@prisma/client'
+import { UseGuards } from '@nestjs/common'
+import { GqlAuthGuard } from '../auth/decorators/auth.decorator'
 
 @Resolver(() => BasketEntity)
 export class BasketResolver {
 	constructor(private readonly basketService: BasketService) {}
 
-	@Mutation(() => BasketEntity)
-	createBasket(
-		@Args('createBasketInput') createBasketInput: CreateBasketInput
-	) {
-		return this.basketService.create(createBasketInput)
+	@Mutation(() => BasketEntity, { name: 'createBasket' })
+	@UseGuards(GqlAuthGuard)
+	createBasket(@CurrentUser() user: User) {
+		return this.basketService.create(user.id)
 	}
 
 	@Query(() => [BasketEntity], { name: 'baskets' })
@@ -23,17 +24,5 @@ export class BasketResolver {
 	@Query(() => BasketEntity, { name: 'basket' })
 	findOne(@Args('id', { type: () => Int }) id: number) {
 		return this.basketService.findOne(id)
-	}
-
-	@Mutation(() => BasketEntity)
-	updateBasket(
-		@Args('updateBasketInput') updateBasketInput: UpdateBasketInput
-	) {
-		return this.basketService.update(updateBasketInput.id, updateBasketInput)
-	}
-
-	@Mutation(() => BasketEntity)
-	removeBasket(@Args('id', { type: () => Int }) id: number) {
-		return this.basketService.remove(id)
 	}
 }

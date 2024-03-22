@@ -6,6 +6,7 @@ import { join } from 'path'
 import { ConfigModule } from '@nestjs/config'
 import { BasketModule } from './basket/basket.module';
 import { AuthModule } from './auth/auth.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
 	imports: [
@@ -19,7 +20,8 @@ import { AuthModule } from './auth/auth.module';
 		}),
 		UserModule,
 		BasketModule,
-		AuthModule
+		AuthModule,
+		ProductModule
 	],
 	controllers: [],
 	providers: []
