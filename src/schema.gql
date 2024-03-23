@@ -38,6 +38,16 @@ type Auth {
 }
 
 type Product {
+  id: Int!
+  title: String!
+  type: String!
+  imagePath: String!
+  views: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Category {
   """Example field (placeholder)"""
   exampleField: Int!
 }
@@ -48,6 +58,7 @@ type Query {
   baskets: [BasketEntity!]!
   basket(id: Int!): BasketEntity!
   product(id: Int!): Product!
+  category(id: Int!): Category!
 }
 
 type Mutation {
@@ -59,6 +70,9 @@ type Mutation {
   createProduct(createProductInput: CreateProductInput!): Product!
   updateProduct(updateProductInput: UpdateProductInput!): Product!
   removeProduct(id: Int!): Product!
+  createCategory(createCategoryInput: CreateCategoryInput!): Category!
+  updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
+  removeCategory(id: Int!): Category!
 }
 
 input UpdateUserInput {
@@ -100,6 +114,17 @@ input CreateProductInput {
 }
 
 input UpdateProductInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input CreateCategoryInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateCategoryInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!

@@ -1,7 +1,25 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Field, Int, ObjectType } from '@nestjs/graphql'
 
 @ObjectType()
 export class Product {
-  @Field(() => Int, { description: 'Example field (placeholder)' })
-  exampleField: number;
+	@Field(() => Int)
+	id: number
+
+	@Field(() => String)
+	title: string
+
+	@Field(() => String)
+	type: string
+
+	@Field(() => String)
+	imagePath: string
+
+	@Field(() => Int)
+	views: number
+
+	@Field(() => Date)
+	createdAt: Date
+
+	@Field(() => Date)
+	updatedAt: Date
 }
