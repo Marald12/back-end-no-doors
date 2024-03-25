@@ -73,10 +73,16 @@ type ProductEntity {
   type: String!
   imagePath: String!
   views: Int!
+  price: Int!
   category: CategoryEntity!
   phone: PhoneEntity!
   createdAt: DateTime!
   updatedAt: DateTime!
+}
+
+type BasketItem {
+  """Example field (placeholder)"""
+  exampleField: Int!
 }
 
 type Query {
@@ -92,6 +98,7 @@ type Query {
   brand(id: Int!): BrandEntity!
   phones: [PhoneEntity!]!
   phone(id: Int!): PhoneEntity!
+  basketItem(id: Int!): BasketItem!
 }
 
 type Mutation {
@@ -101,7 +108,7 @@ type Mutation {
   register(registerInput: RegisterInput!): Auth!
   login(loginInput: LoginInput!): Auth!
   createProduct(createProductInput: CreateProductInput!, phoneId: Int!, categoryId: Int!): ProductEntity!
-  updateProduct(updateProductInput: UpdateProductInput!): ProductEntity!
+  updateProduct(updateProductInput: UpdateProductInput!, id: Int!): ProductEntity!
   removeProduct(id: Int!): ProductEntity!
   createCategory(createCategoryInput: CreateCategoryInput!, phoneId: Int!): CategoryEntity!
   updateCategory(updateCategoryInput: UpdateCategoryInput!, id: Int!): CategoryEntity!
@@ -112,6 +119,9 @@ type Mutation {
   createPhone(createPhoneInput: CreatePhoneInput!, brandId: Int!): PhoneEntity!
   updatePhone(updatePhoneInput: UpdatePhoneInput!): PhoneEntity!
   removePhone(id: Int!): PhoneEntity!
+  createBasketItem(createBasketItemInput: CreateBasketItemInput!): BasketItem!
+  updateBasketItem(updateBasketItemInput: UpdateBasketItemInput!): BasketItem!
+  removeBasketItem(id: Int!): BasketItem!
 }
 
 input UpdateUserInput {
@@ -150,14 +160,15 @@ input LoginInput {
 input CreateProductInput {
   title: String!
   type: String!
+  price: Int!
   imagePath: String!
 }
 
 input UpdateProductInput {
   title: String
   type: String
+  price: Int
   imagePath: String
-  id: Int!
 }
 
 input CreateCategoryInput {
@@ -189,5 +200,16 @@ input CreatePhoneInput {
 input UpdatePhoneInput {
   title: String
   imagePath: String
+  id: Int!
+}
+
+input CreateBasketItemInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateBasketItemInput {
+  """Example field (placeholder)"""
+  exampleField: Int
   id: Int!
 }

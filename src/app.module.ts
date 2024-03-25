@@ -11,6 +11,7 @@ import { CategoryModule } from './category/category.module'
 import { DatabaseModule } from './database/database.module'
 import { BrandModule } from './brand/brand.module';
 import { PhoneModule } from './phone/phone.module';
+import { BasketItemModule } from './basket-item/basket-item.module';
 
 @Module({
 	imports: [
@@ -29,7 +30,8 @@ import { PhoneModule } from './phone/phone.module';
 		CategoryModule,
 		DatabaseModule,
 		BrandModule,
-		PhoneModule
+		PhoneModule,
+		BasketItemModule
 	],
 	controllers: [],
 	providers: []

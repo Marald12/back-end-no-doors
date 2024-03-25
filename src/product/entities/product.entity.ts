@@ -19,6 +19,9 @@ export class ProductEntity {
 	@Field(() => Int)
 	views: number
 
+	@Field(() => Int)
+	price: number
+
 	@Field(() => CategoryEntity)
 	category: CategoryEntity
 

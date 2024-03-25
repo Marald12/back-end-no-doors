@@ -41,12 +41,12 @@ model Product {
   updatedAt        DateTime                @updatedAt
   views            Int?                    @default(0)
   price            Int
-  category         Category                @relation(fields: [categoryId], references: [id])
-  categoryId       Int
   phone            Phone                   @relation(fields: [phoneId], references: [id])
   phoneId          Int
   favoritesOnUsers FavoritesOnUsers[]      @ignore
   basketItems      BasketItemsOrProducts[] @ignore
+  category         Category?               @relation(fields: [categoryId], references: [id])
+  categoryId       Int?
 }
 
 model FavoritesOnUsers {

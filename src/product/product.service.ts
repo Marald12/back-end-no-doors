@@ -45,6 +45,26 @@ export class ProductService {
 		const prismaClient = new PrismaClient()
 
 		const product = await prismaClient.product.findUnique({
+			where: { id }
+		})
+		if (!product) throw new NotFoundException('Продукт не найден')
+
+		return prismaClient.product.update({
+			where: { id },
+			data: {
+				views: product.views + 1
+			},
+			include: {
+				phone: true,
+				category: true
+			}
+		})
+	}
+
+	async update(id: number, updateProductInput: UpdateProductInput) {
+		const prismaClient = new PrismaClient()
+
+		const product = await prismaClient.product.findUnique({
 			where: { id },
 			include: {
 				phone: true,
@@ -56,13 +76,9 @@ export class ProductService {
 		return prismaClient.product.update({
 			where: { id },
 			data: {
-				views: product.views++
+				...updateProductInput
 			}
 		})
-	}
-
-	async update(id: number, updateProductInput: UpdateProductInput) {
-		return `This action updates a #${id} product`
 	}
 
 	async remove(id: number) {

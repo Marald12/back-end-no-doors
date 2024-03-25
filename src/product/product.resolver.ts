@@ -29,9 +29,10 @@ export class ProductResolver {
 
 	@Mutation(() => ProductEntity)
 	updateProduct(
-		@Args('updateProductInput') updateProductInput: UpdateProductInput
+		@Args('updateProductInput') updateProductInput: UpdateProductInput,
+		@Args('id', { type: () => Int }) id: number
 	) {
-		return this.productService.update(updateProductInput.id, updateProductInput)
+		return this.productService.update(id, updateProductInput)
 	}
 
 	@Mutation(() => ProductEntity)
