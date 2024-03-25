@@ -4,10 +4,12 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { join } from 'path'
 import { ConfigModule } from '@nestjs/config'
-import { BasketModule } from './basket/basket.module';
-import { AuthModule } from './auth/auth.module';
-import { ProductModule } from './product/product.module';
-import { CategoryModule } from './category/category.module';
+import { BasketModule } from './basket/basket.module'
+import { AuthModule } from './auth/auth.module'
+import { ProductModule } from './product/product.module'
+import { CategoryModule } from './category/category.module'
+import { DatabaseModule } from './database/database.module'
+import { BrandModule } from './brand/brand.module';
 
 @Module({
 	imports: [
@@ -23,7 +25,9 @@ import { CategoryModule } from './category/category.module';
 		BasketModule,
 		AuthModule,
 		ProductModule,
-		CategoryModule
+		CategoryModule,
+		DatabaseModule,
+		BrandModule
 	],
 	controllers: [],
 	providers: []

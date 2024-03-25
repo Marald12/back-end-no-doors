@@ -37,7 +37,7 @@ type Auth {
   token: String!
 }
 
-type Product {
+type ProductEntity {
   id: Int!
   title: String!
   type: String!
@@ -47,7 +47,16 @@ type Product {
   updatedAt: DateTime!
 }
 
-type Category {
+type CategoryEntity {
+  id: Int!
+  title: String!
+  imagePath: String!
+  products: [ProductEntity!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Brand {
   """Example field (placeholder)"""
   exampleField: Int!
 }
@@ -57,8 +66,10 @@ type Query {
   user(id: Int!): UserEntity!
   baskets: [BasketEntity!]!
   basket(id: Int!): BasketEntity!
-  product(id: Int!): Product!
-  category(id: Int!): Category!
+  product(id: Int!): ProductEntity!
+  categories: [CategoryEntity!]!
+  category(id: Int!): CategoryEntity!
+  brand(id: Int!): Brand!
 }
 
 type Mutation {
@@ -67,12 +78,15 @@ type Mutation {
   createBasket: BasketEntity!
   register(registerInput: RegisterInput!): Auth!
   login(loginInput: LoginInput!): Auth!
-  createProduct(createProductInput: CreateProductInput!): Product!
-  updateProduct(updateProductInput: UpdateProductInput!): Product!
-  removeProduct(id: Int!): Product!
-  createCategory(createCategoryInput: CreateCategoryInput!): Category!
-  updateCategory(updateCategoryInput: UpdateCategoryInput!): Category!
-  removeCategory(id: Int!): Category!
+  createProduct(createProductInput: CreateProductInput!): ProductEntity!
+  updateProduct(updateProductInput: UpdateProductInput!): ProductEntity!
+  removeProduct(id: Int!): ProductEntity!
+  createCategory(createCategoryInput: CreateCategoryInput!, phoneId: Int!): CategoryEntity!
+  updateCategory(updateCategoryInput: UpdateCategoryInput!, id: Int!): CategoryEntity!
+  removeCategory(id: Int!): String!
+  createBrand(createBrandInput: CreateBrandInput!): Brand!
+  updateBrand(updateBrandInput: UpdateBrandInput!): Brand!
+  removeBrand(id: Int!): Brand!
 }
 
 input UpdateUserInput {
@@ -120,11 +134,21 @@ input UpdateProductInput {
 }
 
 input CreateCategoryInput {
+  title: String!
+  imagePath: String!
+}
+
+input UpdateCategoryInput {
+  title: String
+  imagePath: String
+}
+
+input CreateBrandInput {
   """Example field (placeholder)"""
   exampleField: Int!
 }
 
-input UpdateCategoryInput {
+input UpdateBrandInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!

@@ -64,35 +64,29 @@ model Category {
   imagePath String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  phone     Phone?    @relation(fields: [phoneId], references: [id])
+  phoneId   Int?
 }
 
 model Phone {
-  id        Int       @id @default(autoincrement())
-  title     String
-  imagePath String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  brand     Brand     @relation(fields: [brandId], references: [id])
-  brandId   Int
-  products  Product[]
+  id         Int        @id @default(autoincrement())
+  title      String
+  imagePath  String
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  brand      Brand      @relation(fields: [brandId], references: [id])
+  brandId    Int
+  products   Product[]
+  categories Category[]
 }
 
 model Brand {
-  id            Int            @id @default(autoincrement())
-  title         String
-  imagePath     String
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  phons         Phone[]
-  brandCategory BrandCategory?
-}
-
-model BrandCategory {
   id        Int      @id @default(autoincrement())
+  title     String
+  imagePath String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  brand     Brand    @relation(fields: [brandId], references: [id])
-  brandId   Int      @unique
+  phons     Phone[]
 }
 
 model Basket {
