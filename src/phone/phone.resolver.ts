@@ -1,35 +1,38 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
-import { PhoneService } from './phone.service';
-import { Phone } from './entities/phone.entity';
-import { CreatePhoneInput } from './dto/create-phone.input';
-import { UpdatePhoneInput } from './dto/update-phone.input';
+import { Args, Int, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { PhoneService } from './phone.service'
+import { PhoneEntity } from './entities/phone.entity'
+import { CreatePhoneInput } from './dto/create-phone.input'
+import { UpdatePhoneInput } from './dto/update-phone.input'
 
-@Resolver(() => Phone)
+@Resolver(() => PhoneEntity)
 export class PhoneResolver {
-  constructor(private readonly phoneService: PhoneService) {}
+	constructor(private readonly phoneService: PhoneService) {}
 
-  @Mutation(() => Phone)
-  createPhone(@Args('createPhoneInput') createPhoneInput: CreatePhoneInput) {
-    return this.phoneService.create(createPhoneInput);
-  }
+	@Mutation(() => PhoneEntity)
+	createPhone(
+		@Args('createPhoneInput') createPhoneInput: CreatePhoneInput,
+		@Args('brandId', { type: () => Int }) brandId: number
+	) {
+		return this.phoneService.create(createPhoneInput, brandId)
+	}
 
-  @Query(() => [Phone], { name: 'phone' })
-  findAll() {
-    return this.phoneService.findAll();
-  }
+	@Query(() => [PhoneEntity], { name: 'phones' })
+	findAll() {
+		return this.phoneService.findAll()
+	}
 
-  @Query(() => Phone, { name: 'phone' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.phoneService.findOne(id);
-  }
+	@Query(() => PhoneEntity, { name: 'phone' })
+	findOne(@Args('id', { type: () => Int }) id: number) {
+		return this.phoneService.findOne(id)
+	}
 
-  @Mutation(() => Phone)
-  updatePhone(@Args('updatePhoneInput') updatePhoneInput: UpdatePhoneInput) {
-    return this.phoneService.update(updatePhoneInput.id, updatePhoneInput);
-  }
+	@Mutation(() => PhoneEntity)
+	updatePhone(@Args('updatePhoneInput') updatePhoneInput: UpdatePhoneInput) {
+		return this.phoneService.update(updatePhoneInput.id, updatePhoneInput)
+	}
 
-  @Mutation(() => Phone)
-  removePhone(@Args('id', { type: () => Int }) id: number) {
-    return this.phoneService.remove(id);
-  }
+	@Mutation(() => PhoneEntity)
+	removePhone(@Args('id', { type: () => Int }) id: number) {
+		return this.phoneService.remove(id)
+	}
 }

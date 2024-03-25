@@ -10,12 +10,14 @@ export class ProductResolver {
 
 	@Mutation(() => ProductEntity)
 	createProduct(
-		@Args('createProductInput') createProductInput: CreateProductInput
+		@Args('createProductInput') createProductInput: CreateProductInput,
+		@Args('phoneId', { type: () => Int }) phoneId: number,
+		@Args('categoryId', { type: () => Int }) categoryId: number
 	) {
-		return this.productService.create(createProductInput)
+		return this.productService.create(createProductInput, phoneId, categoryId)
 	}
 
-	@Query(() => [ProductEntity], { name: 'product' })
+	@Query(() => [ProductEntity], { name: 'products' })
 	findAll() {
 		return this.productService.findAll()
 	}

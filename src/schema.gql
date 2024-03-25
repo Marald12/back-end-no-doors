@@ -37,12 +37,22 @@ type Auth {
   token: String!
 }
 
-type ProductEntity {
+type BrandEntity {
   id: Int!
   title: String!
-  type: String!
   imagePath: String!
-  views: Int!
+  phones: [PhoneEntity!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type PhoneEntity {
+  id: Int!
+  title: String!
+  imagePath: String!
+  brand: BrandEntity!
+  products: [ProductEntity!]!
+  categories: [CategoryEntity!]!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -52,21 +62,21 @@ type CategoryEntity {
   title: String!
   imagePath: String!
   products: [ProductEntity!]!
+  phone: PhoneEntity!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
-type BrandEntity {
+type ProductEntity {
   id: Int!
   title: String!
+  type: String!
   imagePath: String!
+  views: Int!
+  category: CategoryEntity!
+  phone: PhoneEntity!
   createdAt: DateTime!
   updatedAt: DateTime!
-}
-
-type Phone {
-  """Example field (placeholder)"""
-  exampleField: Int!
 }
 
 type Query {
@@ -74,12 +84,14 @@ type Query {
   user(id: Int!): UserEntity!
   baskets: [BasketEntity!]!
   basket(id: Int!): BasketEntity!
+  products: [ProductEntity!]!
   product(id: Int!): ProductEntity!
   categories: [CategoryEntity!]!
   category(id: Int!): CategoryEntity!
   brands: [BrandEntity!]!
   brand(id: Int!): BrandEntity!
-  phone(id: Int!): Phone!
+  phones: [PhoneEntity!]!
+  phone(id: Int!): PhoneEntity!
 }
 
 type Mutation {
@@ -88,7 +100,7 @@ type Mutation {
   createBasket: BasketEntity!
   register(registerInput: RegisterInput!): Auth!
   login(loginInput: LoginInput!): Auth!
-  createProduct(createProductInput: CreateProductInput!): ProductEntity!
+  createProduct(createProductInput: CreateProductInput!, phoneId: Int!, categoryId: Int!): ProductEntity!
   updateProduct(updateProductInput: UpdateProductInput!): ProductEntity!
   removeProduct(id: Int!): ProductEntity!
   createCategory(createCategoryInput: CreateCategoryInput!, phoneId: Int!): CategoryEntity!
@@ -97,9 +109,9 @@ type Mutation {
   createBrand(createBrandInput: CreateBrandInput!): BrandEntity!
   updateBrand(updateBrandInput: UpdateBrandInput!): BrandEntity!
   removeBrand(id: Int!): BrandEntity!
-  createPhone(createPhoneInput: CreatePhoneInput!): Phone!
-  updatePhone(updatePhoneInput: UpdatePhoneInput!): Phone!
-  removePhone(id: Int!): Phone!
+  createPhone(createPhoneInput: CreatePhoneInput!, brandId: Int!): PhoneEntity!
+  updatePhone(updatePhoneInput: UpdatePhoneInput!): PhoneEntity!
+  removePhone(id: Int!): PhoneEntity!
 }
 
 input UpdateUserInput {
@@ -136,13 +148,15 @@ input LoginInput {
 }
 
 input CreateProductInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  title: String!
+  type: String!
+  imagePath: String!
 }
 
 input UpdateProductInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  title: String
+  type: String
+  imagePath: String
   id: Int!
 }
 
@@ -168,12 +182,12 @@ input UpdateBrandInput {
 }
 
 input CreatePhoneInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
+  title: String!
+  imagePath: String!
 }
 
 input UpdatePhoneInput {
-  """Example field (placeholder)"""
-  exampleField: Int
+  title: String
+  imagePath: String
   id: Int!
 }

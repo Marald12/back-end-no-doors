@@ -39,7 +39,8 @@ model Product {
   imagePath        String
   createdAt        DateTime                @default(now())
   updatedAt        DateTime                @updatedAt
-  views            Int
+  views            Int?                    @default(0)
+  price            Int
   category         Category                @relation(fields: [categoryId], references: [id])
   categoryId       Int
   phone            Phone                   @relation(fields: [phoneId], references: [id])

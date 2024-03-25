@@ -1,4 +1,6 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql'
+import { CategoryEntity } from '../../category/entities/category.entity'
+import { PhoneEntity } from '../../phone/entities/phone.entity'
 
 @ObjectType()
 export class ProductEntity {
@@ -16,6 +18,12 @@ export class ProductEntity {
 
 	@Field(() => Int)
 	views: number
+
+	@Field(() => CategoryEntity)
+	category: CategoryEntity
+
+	@Field(() => PhoneEntity)
+	phone: PhoneEntity
 
 	@Field(() => Date)
 	createdAt: Date

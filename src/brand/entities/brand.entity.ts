@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql'
+import { PhoneEntity } from '../../phone/entities/phone.entity'
 
 @ObjectType()
 export class BrandEntity {
@@ -10,6 +11,9 @@ export class BrandEntity {
 
 	@Field(() => String)
 	imagePath: string
+
+	@Field(() => [PhoneEntity])
+	phones: PhoneEntity[]
 
 	@Field(() => Date)
 	createdAt: Date
