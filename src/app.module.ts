@@ -10,6 +10,7 @@ import { ProductModule } from './product/product.module'
 import { CategoryModule } from './category/category.module'
 import { DatabaseModule } from './database/database.module'
 import { BrandModule } from './brand/brand.module';
+import { PhoneModule } from './phone/phone.module';
 
 @Module({
 	imports: [
@@ -27,7 +28,8 @@ import { BrandModule } from './brand/brand.module';
 		ProductModule,
 		CategoryModule,
 		DatabaseModule,
-		BrandModule
+		BrandModule,
+		PhoneModule
 	],
 	controllers: [],
 	providers: []

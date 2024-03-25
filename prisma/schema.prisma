@@ -86,7 +86,7 @@ model Brand {
   imagePath String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  phons     Phone[]
+  phones    Phone[]
 }
 
 model Basket {

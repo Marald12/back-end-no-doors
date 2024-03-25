@@ -56,7 +56,15 @@ type CategoryEntity {
   updatedAt: DateTime!
 }
 
-type Brand {
+type BrandEntity {
+  id: Int!
+  title: String!
+  imagePath: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type Phone {
   """Example field (placeholder)"""
   exampleField: Int!
 }
@@ -69,7 +77,9 @@ type Query {
   product(id: Int!): ProductEntity!
   categories: [CategoryEntity!]!
   category(id: Int!): CategoryEntity!
-  brand(id: Int!): Brand!
+  brands: [BrandEntity!]!
+  brand(id: Int!): BrandEntity!
+  phone(id: Int!): Phone!
 }
 
 type Mutation {
@@ -84,9 +94,12 @@ type Mutation {
   createCategory(createCategoryInput: CreateCategoryInput!, phoneId: Int!): CategoryEntity!
   updateCategory(updateCategoryInput: UpdateCategoryInput!, id: Int!): CategoryEntity!
   removeCategory(id: Int!): String!
-  createBrand(createBrandInput: CreateBrandInput!): Brand!
-  updateBrand(updateBrandInput: UpdateBrandInput!): Brand!
-  removeBrand(id: Int!): Brand!
+  createBrand(createBrandInput: CreateBrandInput!): BrandEntity!
+  updateBrand(updateBrandInput: UpdateBrandInput!): BrandEntity!
+  removeBrand(id: Int!): BrandEntity!
+  createPhone(createPhoneInput: CreatePhoneInput!): Phone!
+  updatePhone(updatePhoneInput: UpdatePhoneInput!): Phone!
+  removePhone(id: Int!): Phone!
 }
 
 input UpdateUserInput {
@@ -144,11 +157,22 @@ input UpdateCategoryInput {
 }
 
 input CreateBrandInput {
+  title: String!
+  imagePath: String!
+}
+
+input UpdateBrandInput {
+  title: String
+  imagePath: String
+  id: Int!
+}
+
+input CreatePhoneInput {
   """Example field (placeholder)"""
   exampleField: Int!
 }
 
-input UpdateBrandInput {
+input UpdatePhoneInput {
   """Example field (placeholder)"""
   exampleField: Int
   id: Int!
